@@ -9,7 +9,7 @@ ns ∷ Int → List Int
 ns n = range 0 (n - 1)
 
 multiples ∷ Int → List Int
-multiples n = filter (\n -> mod n 3 == 0 || mod n 5 == 0) (ns n)
+multiples = filter (\n -> mod n 3 == 0 || mod n 5 == 0) <<< ns
 
 answer ∷ Int → Int
-answer n = sum (multiples n)
+answer = sum <<< multiples

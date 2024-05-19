@@ -1,10 +1,11 @@
 module Test.Examples where
 
 import Prelude
+
 import Control.Alternative (guard)
-import Data.Array (concatMap, filter, null, tail, (..), (:))
+import Data.Array (concatMap, filter, tail, (..), (:))
 import Data.Foldable (product)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Path (Path, ls)
 
 factorial :: Int -> Int
@@ -17,8 +18,12 @@ fib 1 = 1
 fib n = fib (n - 1) + fib (n - 2)
 
 length :: forall a. Array a -> Int
-length [] = 0
-length arr = 1 + (length $ fromMaybe [] $ tail arr)
+length arr = case tail arr of
+  Nothing -> 0
+  Just xs -> 1 + length xs
+
+-- length [] = 0
+-- length arr = 1 + (length $ fromMaybe [] $ tail arr)
 
 factors :: Int -> Array (Array Int)
 factors n = filter (\xs -> product xs == n) do
